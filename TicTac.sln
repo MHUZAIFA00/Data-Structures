@@ -1,31 +1,245 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33213.308
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TicTac", "TicTac\TicTac.vcxproj", "{845F93DD-2710-44B2-9B4C-FDE075C13585}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{845F93DD-2710-44B2-9B4C-FDE075C13585}.Debug|x64.ActiveCfg = Debug|x64
-		{845F93DD-2710-44B2-9B4C-FDE075C13585}.Debug|x64.Build.0 = Debug|x64
-		{845F93DD-2710-44B2-9B4C-FDE075C13585}.Debug|x86.ActiveCfg = Debug|Win32
-		{845F93DD-2710-44B2-9B4C-FDE075C13585}.Debug|x86.Build.0 = Debug|Win32
-		{845F93DD-2710-44B2-9B4C-FDE075C13585}.Release|x64.ActiveCfg = Release|x64
-		{845F93DD-2710-44B2-9B4C-FDE075C13585}.Release|x64.Build.0 = Release|x64
-		{845F93DD-2710-44B2-9B4C-FDE075C13585}.Release|x86.ActiveCfg = Release|Win32
-		{845F93DD-2710-44B2-9B4C-FDE075C13585}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DA7CF2C3-002D-4431-A81C-C30B88861C35}
-	EndGlobalSection
-EndGlobal
+#include<iostream>
+#include<windows.h>
+using namespace std;
+int main()
+{
+
+
+	char ch;
+	do {
+		system("CLS");
+		int i = 0;
+		string arr[3][3] = { {"1","2","3"},{"4","5","6"},{"7","8","9"} };
+
+
+
+		do {
+			cout << endl << endl;
+
+			int a;
+
+
+			cout << arr[0][0] << "  | " << arr[0][1] << "  | " << arr[0][2] << endl;
+			cout << "___|____|___" << endl;
+			cout << arr[1][0] << "  | " << arr[1][1] << "  | " << arr[1][2] << endl;
+			cout << "___|____|___" << endl;
+			cout << arr[2][0] << "  | " << arr[2][1] << "  | " << arr[2][2] << endl;
+			cout << "   |    |    " << endl;
+
+
+
+
+
+
+
+			cout << "\nEnter player A" << endl;
+			cin >> a;
+			switch (a)
+			{
+			case 1:
+				if (arr[0][0] != "A" && arr[0][0] != "B")
+				{
+					arr[0][0] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			case 2:
+				if (arr[0][1] != "A" && arr[0][1] != "B")
+				{
+					arr[0][1] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			case 3:
+				if (arr[0][2] != "A" && arr[0][2] != "B")
+				{
+					arr[0][2] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			case 4:
+				if (arr[1][0] != "A" && arr[1][0] != "B")
+				{
+					arr[1][0] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			case 5:
+				if (arr[1][1] != "A" && arr[1][1] != "B")
+				{
+					arr[1][1] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			case 6:
+				if (arr[1][2] != "A" && arr[1][2] != "B")
+				{
+					arr[1][2] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			case 7:
+				if (arr[2][0] != "A" && arr[2][0] != "B")
+				{
+					arr[2][0] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			case 8:
+				if (arr[2][1] != "A" && arr[2][1] != "B")
+				{
+					arr[2][1] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			case 9:
+				if (arr[2][2] != "A" && arr[2][2] != "B")
+				{
+					arr[2][2] = "A";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+				}
+				break;
+			default:
+				cout << "Invalid input please try again in next turn" << endl;
+				Sleep(3000);
+
+			}
+			if (arr[0][0] == arr[0][1] && arr[0][1] == arr[0][2] || arr[1][0] == arr[1][1] && arr[1][1] == arr[1][2] || arr[2][0] == arr[2][1] && arr[2][1] == arr[2][2]
+				|| arr[0][0] == arr[1][0] && arr[1][0] == arr[2][0] || arr[0][1] == arr[1][1] && arr[1][1] == arr[2][1] || arr[0][2] == arr[1][2] && arr[1][2] == arr[2][2]
+				|| arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] || arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0])
+			{
+				cout << "***************Congratulations**************\n        Player A won the Game" << endl;
+				break;
+			}
+			cout << "\nEnter player B" << endl;
+			cin >> a;
+			switch (a)
+			{
+			case 1:
+				if (arr[0][0] != "A" && arr[0][0] != "B")
+				{
+					arr[0][0] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			case 2:
+				if (arr[0][1] != "A" && arr[0][1] != "B")
+				{
+					arr[0][1] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			case 3:
+				if (arr[0][2] != "A" && arr[0][2] != "B")
+				{
+					arr[0][2] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			case 4:
+				if (arr[1][0] != "A" && arr[1][0] != "B")
+				{
+					arr[1][0] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			case 5:
+				if (arr[1][1] != "A" && arr[1][1] != "B")
+				{
+					arr[1][1] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			case 6:
+				if (arr[1][2] != "A" && arr[1][2] != "B")
+				{
+					arr[1][2] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			case 7:
+				if (arr[2][0] != "A" && arr[2][0] != "B")
+				{
+					arr[2][0] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			case 8:
+				if (arr[2][1] != "A" && arr[2][1] != "B")
+				{
+					arr[2][1] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			case 9:
+				if (arr[2][2] != "A" && arr[2][2] != "B")
+				{
+					arr[2][2] = "B";
+				}
+				else {
+					cout << "Already Filled try in next turn" << endl;
+					Sleep(1000);
+				}
+				break;
+			default:
+				cout << "Invalid input please try again in next turn" << endl;
+				Sleep(3000);
+
+			}
+			if (arr[0][0] == arr[0][1] && arr[0][1] == arr[0][2] || arr[1][0] == arr[1][1] && arr[1][1] == arr[1][2] || arr[2][0] == arr[2][1] && arr[2][1] == arr[2][2]
+				|| arr[0][0] == arr[1][0] && arr[1][0] == arr[2][0] || arr[0][1] == arr[1][1] && arr[1][1] == arr[2][1] || arr[0][2] == arr[1][2] && arr[1][2] == arr[2][2]
+				|| arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] || arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0])
+			{
+				cout << "***************Congratulations**************\n        Player B won the Game" << endl;
+				break;
+			}
+
+			system("CLS");
+			i++;
+		} while (i < 5);
+		cout << "Press Y if you want to contine... " << endl;
+		cin >> ch;
+	} while (ch == 'y' || ch == 'Y');
+}
