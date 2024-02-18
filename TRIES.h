@@ -1,0 +1,330 @@
+#include<iostream>	
+#include<string>
+#include<fstream>
+#include<vector>
+#include<sstream>
+using namespace std;
+class Node
+{
+public:
+	string mean;
+	vector<Node*> letter;
+	Node(string mean)
+	{
+		this->mean = mean;
+		letter.clear();
+		for (int i = 0; i < 26; i++)           
+		{
+			letter.push_back(NULL);       
+		}
+	}
+	~Node()
+	{
+		this->mean = " ";
+		letter.clear();         //Clear vector
+	}
+};
+class Tries
+{
+private:
+	Node* root;
+	void Display(Node* curr, int i, string extraWord = "")
+	{
+		if (isEmpty())
+		{
+			cout << "Empty Dictationary" << endl;
+			return;
+		}
+		if (curr == NULL)
+		{
+			return;
+		}
+		extraWord += char(i + 97);
+		if (curr->mean != " ")
+		{
+			extraWord[0] = ' ';
+			cout << extraWord << "  "<< "" << curr->mean << endl;
+		}
+		for (int x = 0; x < 26; x++)
+		{
+			Display(curr->letter[x], x, extraWord);
+		}
+	}
+	void Search(Node* curr, string word, string& meaning)
+	{
+		for (int i = 0; i < word.length(); i++)
+		{
+			int index = int(word[i]) - 97;
+			if (index < 0 or index >= 26)
+			{
+				cout << "Invalid Word" << endl;
+				return;
+			}
+			if (curr == NULL)
+			{
+				return;
+			}
+			if (curr->letter[index] == NULL)
+			{
+				return;
+			}
+			else
+			{
+				curr = curr->letter[index];
+			}
+		}
+		meaning = curr->mean;
+	}
+	void SuggestWord(Node* curr, string word, string& meaning)
+	{
+		for (int i = 0; i < word.length(); i++)
+		{
+			int index = int(word[i]) - 97;
+			if (index < 0 or index >= 26)
+			{
+				cout << "Invalid Word"<<endl;
+				return;
+			}
+			if (curr == NULL)
+			{
+				return;
+			}
+			if (curr->letter[index] == NULL)
+			{
+				return;
+			}
+			else
+			{
+				curr = curr->letter[index];
+			}
+		}
+		string extraWord = "a" + word;
+		for (int i = 0; i < 26; i++)
+		{
+			if (curr)
+			{
+				Display(curr->letter[i], i, extraWord);
+			}
+		}
+	}
+	bool DeleteVector(vector<Node*> letter)
+	{
+		for (int i = 0; i < letter.size(); i++)
+		{
+
+			if (letter[i] != NULL)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	void Delete(Node*& curr, string word, int i, bool& isDeleted, bool& endFound)
+	{
+		if (curr == NULL || endFound == true)
+		{
+			return ;
+		}
+		if (i >= word.length() || word[i] == '\0')
+		{
+			if (curr->mean != " ")
+			{
+				cout << " "<< " " << curr->mean;
+				isDeleted = true;
+			}
+			curr->mean = "\0";
+			if (DeleteVector(curr->letter))
+			{
+				delete curr;
+				curr = NULL;
+			}
+			endFound = true;
+			return;
+		}
+		int index = int(word[i]) - 97;
+		cout << char(index + 97);
+		if (index < 0 or index >= 26)
+		{
+			cout << "Invalid Word" << endl;
+			return;
+		}
+		if (curr->letter[index] == NULL)
+		{
+			return;
+		}
+		else
+		{
+			Delete(curr->letter[index], word, i + 1, isDeleted, endFound);
+		}
+		if (curr->mean != "\0" && isDeleted == true)
+		{
+			endFound = true;
+			return;
+		}
+		if (isDeleted == true && DeleteVector(curr->letter))
+		{
+			delete curr;
+			curr = NULL;
+		}
+	}
+	void DeleteAll(Node*& curr, int i)               //Delete Complete Dictionary
+	{
+		if (curr == NULL)
+		{
+			return;
+		}
+		for (int x = 0; x < 26; x++)
+		{
+			if (curr)
+			{
+				DeleteAll(curr->letter[x], x);
+				if (DeleteVector(curr->letter))
+				{
+					delete curr;
+					curr = NULL;
+				}
+			}
+		}
+	}
+	bool checkWord(string word)
+	{
+		return true;
+	}
+	public:
+	Tries()
+	{
+		root = NULL;
+	}
+	~Tries()
+	{
+		deleteAll();
+	}
+	void deleteAll()
+	{
+		DeleteAll(root, 0);
+		cout << endl<<"Memory free"<<endl;
+	}
+	void insert(string word, string meaning)
+	{
+		if (!(checkWord(word)))
+		{
+			cout << endl<<"Invalid Word"<<endl;
+			return;
+		}
+		if (root == NULL)
+		{
+			root = new Node("\0");
+		}
+		Node* curr = root;
+		cout << endl;
+		cout << " Insertion : ";
+		for (int i = 0; i < word.length(); i++)
+		{
+			int index = int(word[i]) - 97; // 4 1 9
+			cout << char(index + 97); // 101 98 106 |
+			if (index < 0 or index >= 26)
+			{
+				cout << endl << "Invalid Word" << endl;
+				return;
+			}
+			if (curr->letter[index] == NULL)
+			{
+				curr = curr->letter[index] = new Node("\0");            //Allocate memory
+			}
+			else
+			{
+				curr = curr->letter[index];
+			}
+		}
+		curr->mean = meaning;
+		cout << "   " << curr->mean <<endl;
+	}
+	bool search(string word)
+	{
+		string meaning = "\0";
+		Search(root, word, meaning);
+
+		if (meaning != "\0")
+		{
+			cout << "Word : " << word <<endl<< "Meaning : " << meaning << endl;
+			return true;
+		}
+		else
+		{
+			cout << "Not Found!";
+			return false;
+		}
+	}
+	void display()
+	{
+		cout << endl<<"Dictationary :"<<endl;
+
+		Display(root, 0);
+		cout << endl;
+	}
+	bool isEmpty()
+	{
+		return root == NULL;
+	}
+	bool deleteWord(string word)
+	{
+		bool isDeleted = false, endFound = false;
+		cout << "[";
+		Delete(root, word, 0, isDeleted, endFound);
+
+		if (isDeleted)
+		{
+			cout << "\tDeleted]";
+		}
+		else
+		{
+			cout << " Not Deleted]\n";
+		}
+		return isDeleted;
+	}
+	void suggestion(string word)
+	{
+		cout << "Suggestions: " << word << endl;
+		string meaning = "\0";
+		SuggestWord(root, word, meaning);
+		cout << endl;
+	}
+	void importDictionary(string fileName)
+	{
+		ifstream dictionaryFile(fileName);
+		if (!(dictionaryFile))
+		{
+			cout << endl<<"File Not Exist ! "<<endl;
+			return;
+		}
+		string line;
+		while (getline(dictionaryFile, line))
+		{
+			string word = "", meaning = "";
+			bool wordDone = false;
+			for (long i = 0; i < line.size(); i++)
+			{
+				if (wordDone == false)
+				{
+					if ((int(line[i]) >= 97 && int(line[i]) <= 122) || (int(line[i]) >= 65 && int(line[i] <= 90)))
+					{
+						word += line[i];
+					}
+					else
+					{
+						wordDone = true;
+					}
+				}
+				else if (wordDone == true)
+				{
+					if ((int(line[i]) >= 97 && int(line[i]) <= 122) || (int(line[i]) >= 65 && int(line[i] <= 90)))
+					{
+						meaning += line[i];
+					}
+				}
+			}
+			this->insert(word, meaning);
+		}
+		dictionaryFile.close();
+	}
+};
